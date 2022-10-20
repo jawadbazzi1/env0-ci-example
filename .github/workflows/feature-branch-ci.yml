@@ -41,3 +41,8 @@ jobs:
       id: validate
       if: success() || failure()
       run: terraform validate
+
+    - name: Run TFSec
+      uses: aquasecurity/tfsec-action@v1.0.0
+      id: tfsec
+      if: success () || failure()
