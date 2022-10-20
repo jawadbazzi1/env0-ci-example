@@ -28,11 +28,12 @@ resource "azurerm_subnet" "main" {
 }
 
 resource "azurerm_public_ip" "main" {
-  name                = local.base_name
+  count               = var.vm_count
+  name                = "${local.base_name}-${count.index}"
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
   allocation_method   = "Dynamic"
-  domain_name_label   = lower(local.base_name)
+  domain_name_label   = "${lower(local.base_name)}-${count.index}"
 }
 
 resource "azurerm_network_security_group" "main" {
@@ -56,7 +57,8 @@ resource "azurerm_network_security_rule" "app" {
 }
 
 resource "azurerm_network_interface" "main" {
-  name                = local.base_name
+  count               = var.vm_count
+  name                = "${local.base_name}-${count.index}"
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
 
@@ -64,16 +66,17 @@ resource "azurerm_network_interface" "main" {
     name                          = "${var.prefix}NICConfg"
     subnet_id                     = azurerm_subnet.main[var.app_subnet]
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.main.id
+    public_ip_address_id          = azurerm_public_ip.main[count.index].id
   }
 }
 
 # Create a Linux virtual machine
 resource "azurerm_linux_virtual_machine" "main" {
-  name                  = local.base_name
+  count                 = var.vm_count
+  name                  = "${local.base_name}-${count.index}"
   location              = azurerm_resource_group.main.location
   resource_group_name   = azurerm_resource_group.main.name
-  network_interface_ids = [azurerm_network_interface.main.id]
+  network_interface_ids = [azurerm_network_interface.main[count.index].id]
   size                  = var.vm_size
   admin_username        = var.admin_username
   admin_password        = var.admin_password
