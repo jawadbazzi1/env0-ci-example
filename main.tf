@@ -64,7 +64,7 @@ resource "azurerm_network_interface" "main" {
 
   ip_configuration {
     name                          = "${var.prefix}NICConfg"
-    subnet_id                     = azurerm_subnet.main[var.app_subnet]
+    subnet_id                     = azurerm_subnet.main[var.app_subnet].id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.main[count.index].id
   }
