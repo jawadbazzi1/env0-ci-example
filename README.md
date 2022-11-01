@@ -48,6 +48,7 @@ No modules.
 | <a name="input_organization_tag"></a> [organization\_tag](#input\_organization\_tag) | (Optional) Org tag to apply to all resources. | `string` | `null` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | (Required) Naming prefix for resources. | `string` | n/a | yes |
 | <a name="input_subnet_map"></a> [subnet\_map](#input\_subnet\_map) | (Required) Map of subnet names and address spaces. | `map(string)` | n/a | yes |
+| <a name="input_vm_count"></a> [vm\_count](#input\_vm\_count) | (Optional) Number of VMs to create, defaults to 1. | `number` | `1` | no |
 | <a name="input_vm_size"></a> [vm\_size](#input\_vm\_size) | (Optional) VM size for app. Defaults to Standard\_D2s\_v5. | `string` | `"Standard_D2s_v5"` | no |
 | <a name="input_vnet_address_space"></a> [vnet\_address\_space](#input\_vnet\_address\_space) | (Required) Address space for the virtual network. | `list(string)` | n/a | yes |
 

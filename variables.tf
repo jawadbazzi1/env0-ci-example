@@ -31,6 +31,12 @@ variable "organization_tag" {
   default     = null
 }
 
+variable "vm_count" {
+  type        = number
+  description = "(Optional) Number of VMs to create, defaults to 1."
+  default     = 1
+}
+
 variable "vm_size" {
   type        = string
   description = "(Optional) VM size for app. Defaults to Standard_D2s_v5."
