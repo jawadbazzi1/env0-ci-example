@@ -28,6 +28,7 @@ resource "azurerm_subnet" "main" {
 }
 
 resource "azurerm_public_ip" "main" {
+  #chand formatting and attributes
   count               = var.vm_count
   name                = "${local.base_name}-${count.index}"
   location            = var.location
