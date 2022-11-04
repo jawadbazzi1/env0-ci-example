@@ -2,6 +2,53 @@
 
 Example code for a CI process involving env0
 
+## Introduction
+
+This code is an example of Continuous Integration with Terraform and env0. It is meant as a reference for my Terraform Tuesday YouTube video [Exploring Continuous Integration with Infrastructure as Code](https://youtu.be/PQjs5rDbPbg). If you'd like to take it for a spin yourself, you'll first want to fork this repository and then follow the steps below.
+
+## Prerequisites
+
+You will need a few things to get started:
+
+* A GitHub account
+* An env0 account
+* An Azure subscription
+* A service principal for your Azure subscription
+* Python installed locally for pre-commit hooks
+
+## Setup
+
+Once you've forked the repository, you will pull down a local copy. Then you'll set up the pre-commit hook processing. The contents of [.pre-commit-config.yaml](.pre-commit-config.yaml) define the hooks that will run. Use the instructions found on [James Cook's site](https://jamescook.dev/pre-commit-for-terraform) to prepare your machine to leverage the pre-commit hooks.
+
+You'll also need to install the utilities used by the pre-commit hooks:
+
+* terraform-docs
+* tfsec
+* tflint
+
+The pre-commit hook piece is optional, but I think it's very worthwhile.
+
+The GitHub actions are defined in the .github/workflows directory. You don't need to do anything to get it to work. The workflow will fire on a push to any branch not named `main`.
+
+## env0 Setup
+
+The last piece of the process uses a project and environment defined in env0. Here's what you'll need to configure on the env0 side:
+
+* Create a project
+* Create cloud credentials for Azure
+* Create a template referencing the contents of this repository
+* Create an environment for the template
+  * Enable deploy on push and plan on PR
+  * Configure values for the variables in the template
+
+When a PR comes in, the environment will run a plan, including the steps defined in the env0.yml file. When the PR is merged, the environment will run a deploy.
+
+Once you've created the environment, run a deploy to get the resources created in Azure.
+
+## Running the demo
+
+You'll start by creating a new branch and making a change to the Terraform code. Then try to commit the change and observe the pre-commit hooks that run. Once they pass, push the branch to GitHub and observer the GitHub Actions workflow. Then open a PR. You'll see the plan run in the PR. Once the PR is merged, you'll see the deploy run in the environment.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
