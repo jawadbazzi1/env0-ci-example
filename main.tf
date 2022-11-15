@@ -35,6 +35,7 @@ resource "azurerm_public_ip" "main" {
   resource_group_name = azurerm_resource_group.main.name
   allocation_method   = "Dynamic"
   domain_name_label   = "${lower(local.base_name)}-${count.index}"
+  tags = local.common_tags
 }
 
 resource "azurerm_network_security_group" "main" {
